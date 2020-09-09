@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import {Router, Route, Switch, Redirect, Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { history } from '../_helpers';
@@ -22,8 +22,25 @@ function App() {
 
     return (
         <div className="jumbotron">
+            <nav className="navbar navbar-expand-sm bg-light">
+
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Link 1</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Link 2</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">
+                            {/*<Link to="/login">Logout</Link>*/}
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
             <div className="container">
-                <div className="col-md-8 offset-md-2">
+                <div className="col-md-12">
                     {alert.message &&
                         <div className={`alert ${alert.type}`}>{alert.message}</div>
                     }

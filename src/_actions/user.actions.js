@@ -8,14 +8,15 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getByUsername,
     delete: _delete
 };
 
-function login(username, password, from) {
+function login(email, password, from) {
     return dispatch => {
-        dispatch(request({ username }));
+        dispatch(request({ email }));
 
-        userService.login(username, password)
+        userService.login(email, password)
             .then(
                 user => { 
                     dispatch(success(user));
@@ -57,15 +58,31 @@ function register(user) {
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function success(user) { return { type: userConstants.REGISTER_SUCCESS,  user } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function getAll() {
+function getAll(username) {
+    return dispatch => {
+        dispatch(request(username));
+
+        userService.getById(username)
+            .then(
+                users => dispatch(success(users)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: userConstants.GETALL_REQUEST } }
+    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
+    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function getByUsername() {
     return dispatch => {
         dispatch(request());
 
-        userService.getAll()
+        userService.getById()
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
